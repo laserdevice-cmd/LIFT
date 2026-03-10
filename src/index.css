@@ -1,0 +1,255 @@
+:root {
+  --bg-dark: #0f172a;
+  --bg-card: #1e293b;
+  --neon-orange: #f97316;
+  --neon-red: #ef4444;
+  --neon-blue: #3b82f6;
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+body {
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  background-image: 
+    radial-gradient(circle at 50% 0%, #1e293b 0%, transparent 70%),
+    linear-gradient(180deg, #020617 0%, #0f172a 100%);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+#root {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Animations */
+@keyframes neon-pulse-up {
+  0%, 100% { box-shadow: 0 0 10px var(--neon-blue), inset 0 0 5px var(--neon-blue); border-color: var(--neon-blue); }
+  50% { box-shadow: 0 0 20px var(--neon-blue), inset 0 0 10px var(--neon-blue); border-color: #60a5fa; }
+}
+
+@keyframes neon-pulse-down {
+  0%, 100% { box-shadow: 0 0 10px var(--neon-orange), inset 0 0 5px var(--neon-orange); border-color: var(--neon-orange); }
+  50% { box-shadow: 0 0 20px var(--neon-orange), inset 0 0 10px var(--neon-orange); border-color: #fb923c; }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); }
+  75% { transform: translateX(-5px); }
+}
+
+.direction-indicator.UP {
+  animation: neon-pulse-up 2s infinite;
+  color: var(--neon-blue);
+  border: 2px solid var(--neon-blue);
+}
+
+.direction-indicator.DOWN {
+  animation: neon-pulse-down 2s infinite;
+  color: var(--neon-orange);
+  border: 2px solid var(--neon-orange);
+}
+
+.glass-panel {
+  background: rgba(30, 41, 59, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  border-radius: 16px;
+}
+
+/* Card Styles */
+.playing-card {
+  width: 90px;
+  height: 130px;
+  border-radius: 10px;
+  background: linear-gradient(145deg, #1e293b, #0f172a);
+  border: 1px solid rgba(255,255,255,0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  user-select: none;
+  font-family: 'Outfit', sans-serif;
+  color: white;
+  box-shadow: 0 4px 6px -1px rgba(0,0,0,0.5), inset 0 0 15px rgba(255,255,255,0.05);
+}
+
+.playing-card:hover {
+  transform: translateY(-15px) scale(1.05);
+  box-shadow: 0 20px 25px -5px rgba(0,0,0,0.8), inset 0 0 20px rgba(255,255,255,0.1);
+  border-color: rgba(255,255,255,0.5);
+  z-index: 10;
+}
+
+.playing-card.back {
+  background: repeating-linear-gradient(45deg, #0f172a, #0f172a 10px, #1e293b 10px, #1e293b 20px);
+  justify-content: center;
+  align-items: center;
+  cursor: default;
+}
+.playing-card.back:hover {
+  transform: none;
+}
+
+.playing-card.selected {
+  transform: translateY(-20px) scale(1.1);
+  border-color: var(--neon-orange);
+  box-shadow: 0 0 20px rgba(249, 115, 22, 0.5), inset 0 0 15px rgba(249, 115, 22, 0.2);
+  z-index: 20;
+}
+
+.card-value {
+  font-size: 3rem;
+  font-weight: 900;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+}
+
+.card-penalty {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--neon-red);
+  text-shadow: 0 0 8px rgba(239, 68, 68, 0.6);
+  padding: 4px 8px;
+  border-radius: 4px;
+  background: rgba(0,0,0,0.5);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.card-penalty-small {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: var(--neon-red);
+  text-shadow: 0 0 5px rgba(239, 68, 68, 0.5);
+}
+
+/* Buttons */
+.btn {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: white;
+  border: 1px solid rgba(255,255,255,0.1);
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.6), inset 0 0 10px rgba(255,255,255,0.2);
+}
+
+.btn:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.btn:disabled {
+  background: #334155;
+  color: #94a3b8;
+  cursor: not-allowed;
+  box-shadow: none;
+  border-color: transparent;
+}
+
+.btn-danger {
+  background: linear-gradient(135deg, #dc2626, #991b1b);
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.4);
+}
+
+.btn-danger:hover:not(:disabled) {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  box-shadow: 0 6px 16px rgba(220, 38, 38, 0.6), inset 0 0 10px rgba(255,255,255,0.2);
+}
+
+.btn-outline {
+  background: transparent;
+  border: 1px solid var(--neon-blue);
+  color: var(--neon-blue);
+  box-shadow: none;
+}
+.btn-outline:hover:not(:disabled) {
+  background: rgba(59,130,246,0.1);
+  box-shadow: 0 0 10px rgba(59,130,246,0.3);
+}
+
+/* Layout */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+  padding: 1rem;
+}
+
+/* Specific UI parts */
+.player-list {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.player-avatar {
+  background: rgba(30, 41, 59, 0.8);
+  border: 2px solid #334155;
+  border-radius: 50%;
+  width: 70px;
+  height: 70px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: all 0.3s;
+}
+
+.player-avatar.current {
+  border-color: var(--neon-orange);
+  box-shadow: 0 0 15px var(--neon-orange);
+  transform: scale(1.1);
+}
+
+.player-avatar.eliminated {
+  opacity: 0.3;
+  filter: grayscale(1);
+}
+
+.player-name {
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-top: 4px;
+  position: absolute;
+  bottom: -20px;
+  white-space: nowrap;
+}
+
+.card-count {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
