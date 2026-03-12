@@ -43,7 +43,7 @@ export function GameBoard() {
             <AIEngine />
 
             {/* Header Log */}
-            <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '2rem' }}>
+            <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '1rem' }}>
                 <div className="glass-panel" style={{ textAlign: 'center', padding: '1rem 2rem' }}>
                     <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold', marginBottom: '0.5rem' }}>
                         {message}
@@ -56,7 +56,7 @@ export function GameBoard() {
             </div>
 
             {/* Players Ring */}
-            <div className="player-list">
+            <div className="player-list" style={{ marginBottom: '1rem' }}>
                 {players.map((p, i) => (
                     <div
                         key={p.id}
@@ -74,8 +74,8 @@ export function GameBoard() {
             <div className="board-area">
 
                 {/* Left Side: Elevator Floors */}
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', background: 'rgba(15, 23, 42, 0.6)', padding: '1.5rem', borderRadius: '16px', border: '1px solid #334155', boxShadow: 'inset 0 0 20px rgba(0,0,0,0.5)', alignItems: 'center' }}>
-                    <div style={{ textAlign: 'center', color: '#94a3b8', fontSize: '0.75rem', fontWeight: 'bold', marginBottom: '4px', textTransform: 'uppercase', letterSpacing: '2px' }}>Piani</div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', background: 'rgba(15, 23, 42, 0.6)', padding: '1rem', borderRadius: '16px', border: '1px solid #334155', boxShadow: 'inset 0 0 20px rgba(0,0,0,0.5)', alignItems: 'center' }}>
+                    <div style={{ textAlign: 'center', color: '#94a3b8', fontSize: '0.7rem', fontWeight: 'bold', marginBottom: '2px', textTransform: 'uppercase', letterSpacing: '2px' }}>Piani</div>
 
                     <div style={{ height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                         {direction === 'UP' && <ArrowUp size={32} className="direction-indicator UP" style={{ border: 'none', padding: 0 }} />}
@@ -133,7 +133,7 @@ export function GameBoard() {
             </div>
 
             {/* Actions / Hand */}
-            <div className="glass-panel" style={{ padding: '1.5rem', marginTop: '1rem' }}>
+            <div className="glass-panel" style={{ padding: '1rem', marginTop: '0.5rem' }}>
                 {humanPlayer && !humanPlayer.isEliminated ? (
                     <>
                         <h3 style={{ fontSize: '1.125rem', fontWeight: 'bold', marginBottom: '1rem', textAlign: 'center' }}>

@@ -16,15 +16,15 @@
   --font-base: 1rem;
 }
 
-/* 1080p Optimization (Full HD) */
+/* 1080p Optimization (Full HD) - Adjusted to fit browser UI */
 @media (min-width: 1440px) {
   :root {
-    --card-w: 120px;
-    --card-h: 170px;
-    --avatar-size: 90px;
-    --floor-size: 60px;
-    --board-gap: 6rem;
-    --font-base: 1.15rem;
+    --card-w: 100px; /* Reduced from 120 */
+    --card-h: 145px; /* Reduced from 170 */
+    --avatar-size: 80px; /* Reduced from 90 */
+    --floor-size: 52px; /* Reduced from 60 */
+    --board-gap: 4rem; /* Reduced from 6rem */
+    --font-base: 1.05rem; /* Reduced from 1.15 */
   }
 }
 
@@ -225,7 +225,7 @@ body {
   flex-direction: column;
   height: 100vh;
   overflow: hidden;
-  padding: 1rem;
+  padding: 0.5rem; /* Reduced from 1rem */
 }
 
 /* Specific UI parts */
@@ -334,12 +334,12 @@ body {
 
 @media (min-width: 1440px) {
   .game-log-panel {
-    height: 12rem;
-    max-width: 1200px;
+    height: 9rem; /* Reduced from 12rem */
+    max-width: 1100px;
   }
   
   .controls-panel {
-    max-width: 800px;
-    padding: 2rem;
+    max-width: 750px;
+    padding: 1.5rem; /* Reduced from 2rem */
   }
 }
