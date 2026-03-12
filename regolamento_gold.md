@@ -7,7 +7,7 @@ Il mazzo segue una distribuzione a campana per rendere i numeri estremi rarissim
 • Valori 3 e 7: 10 carte ciascuno.
 • Valori 4 e 6: 12 carte ciascuno.
 • Valore 5: 14 carte.
-Il Dorso Parlante ("Risk Visible"): Ogni carta mostra sul retro la penalità che si subisce in caso di errore nel dubitare. Le penalità sono: +1, +2, +3, +4 o il letale +X (dove X è uguale al valore numerico dichiarato della carta giocata).
+Il Dorso Parlante ("Risk Visible"): Ogni carta mostra sul retro la penalità che si subisce in caso di errore nel dubitare. Le penalità sono: +1, +2, +3, +4 o il letale +X (dove X è uguale al valore numerico della carta giocata).
 ⚙️ 2. Preparazione (Setup)
 1. Distribuisci 7 carte a ogni giocatore.
 2. Posiziona il resto del mazzo coperto al centro del tavolo (Pozzo di Pesca). Nota: se il mazzo si esaurisce durante la partita, rimescola immediatamente gli scarti per formare un nuovo mazzo.

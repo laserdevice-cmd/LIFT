@@ -64,8 +64,8 @@ const drawCards = (deck: Card[], discardPile: Card[], count: number) => {
     return { drawn, newDeck: currentDeck, newDiscard: currentDiscard };
 };
 
-const getPenaltyAmount = (penaltyStr: Penalty, declaredValue: number): number => {
-    if (penaltyStr === '+X') return declaredValue;
+const getPenaltyAmount = (penaltyStr: Penalty, actualValue: number): number => {
+    if (penaltyStr === '+X') return actualValue;
     return parseInt(penaltyStr.replace('+', ''), 10);
 };
 
@@ -98,12 +98,21 @@ export const useGameStore = create<GameState>((set, get) => ({
             });
         });
 
+        // Pool of potential bot names
+        const botNamesPool = [
+            "Caronte", "Minosse", "Lucifero", "SatanBot", "Vertigo",
+            "Abisso", "Malfidato", "Bugiardo", "BluffKing", "Oscuro",
+            "Pinnacolo", "Zolfo", "Fiammetta", "Cenere", "Rovina"
+        ];
+        // Shuffle the pool to pick unique names
+        const shuffledBotNames = [...botNamesPool].sort(() => Math.random() - 0.5);
+
         // Create AIs
         for (let i = 0; i < aiCount; i++) {
             const pCards = initialDeck.splice(-7, 7);
             players.push({
                 id: `ai-${i}`,
-                name: `Bot ${i + 1}`,
+                name: shuffledBotNames[i % shuffledBotNames.length] || `Bot ${i + 1}`,
                 isAI: true,
                 hand: pCards,
                 isEliminated: false
@@ -164,13 +173,16 @@ export const useGameStore = create<GameState>((set, get) => ({
             isResolved: false
         };
 
+        const nextIdx = state._getNextPlayerIndex();
+        const nextPlayer = state.players[nextIdx];
+
         // The card goes to discard ONLY visually for now, actually it is in limbo on top of the stack.
         set({
             players: newPlayers,
             declarationsHistory: [...state.declarationsHistory, newDeclaration],
             discardPile: [...state.discardPile, playedCard], // We add to discardpile right away. If doubt is false, we pop it.
             phase: 'WAIT_FOR_DOUBT',
-            message: `${player.name} ha dichiarato un ${declaredValue}. Qualcuno dubita?`,
+            message: `${player.name} ha dichiarato un ${declaredValue}. ${nextPlayer.name} dubita?`,
             gameLog: [...state.gameLog, `${player.name} ha dichiarato un ${declaredValue}.`],
             doubters: [playerId], // player cannot doubt themselves
         });
@@ -241,7 +253,7 @@ export const useGameStore = create<GameState>((set, get) => ({
         const playedCard = state.discardPile[state.discardPile.length - 1];
         const isHonest = playedCard.value === lastDecl.declaredValue;
 
-        let penaltyCount = getPenaltyAmount(playedCard.penalty, lastDecl.declaredValue);
+        let penaltyCount = getPenaltyAmount(playedCard.penalty, playedCard.value);
 
         let newDeck = [...state.deck];
         let newDiscard = [...state.discardPile];
@@ -317,6 +329,17 @@ export const useGameStore = create<GameState>((set, get) => ({
 
     continueTurn: () => {
         const state = get();
+
+        // Check if anyone won by emptying their hand (e.g. after a failed doubt on their last card)
+        const winner = state.players.find(p => !p.isEliminated && p.hand.length === 0);
+        if (winner) {
+            set({
+                phase: 'GAME_OVER',
+                message: `${winner.name} ha svuotato la mano e VINCE LA PARTITA!`,
+                gameLog: [...state.gameLog, `${winner.name} ha vinto liberandosi di tutte le carte.`],
+            });
+            return;
+        }
 
         // Check game over by elimination
         const alivePlayers = state.players.filter(p => !p.isEliminated);

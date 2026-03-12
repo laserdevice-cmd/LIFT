@@ -11,10 +11,13 @@ export function AIEngine() {
 
             if (nextPlayer && nextPlayer.isAI) {
                 const t = setTimeout(() => {
+                    const playerWhoPlayed = players[currentPlayerIndex];
+                    const isLastCard = playerWhoPlayed.hand.length === 0;
+
                     // AI Logic to doubt
-                    // Probability: high if declared value is an impossible extreme, e.g. 1 or 9 and AI holds many 1s or 9s.
-                    // Random 10% chance otherwise.
-                    const isDoubt = Math.random() < 0.15;
+                    // Probability: 100% if it's the last card, otherwise 15%
+                    const isDoubt = isLastCard || Math.random() < 0.15;
+
                     if (isDoubt) {
                         doubt(nextPlayer.id);
                     } else {
